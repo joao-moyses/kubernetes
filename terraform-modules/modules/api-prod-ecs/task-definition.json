@@ -1,0 +1,31 @@
+[
+   { 
+      "essential": true,
+      "image": "761249182852.dkr.ecr.us-east-1.amazonaws.com/liqi-market-maker-prod:latest",
+
+      "name": "liqi-market-maker-prod",
+      "logConfiguration": {
+         "logDriver": "awslogs",
+         "secretOptions": [],
+         "options": {
+           "awslogs-group": "/liqi-market-maker-prod-log-group",
+           "awslogs-region": "us-east-1",
+           "awslogs-stream-prefix": "liqi-market-maker"
+         }
+       },
+      "portMappings": [ 
+         { 
+            "containerPort": 3000,
+            "hostPort": 3000,
+            "protocol": "tcp"
+         }
+      ],
+      "executionRoleArn": "arn:aws:iam::761249182852:role/EcsTaskExecutionRole",
+      "family": "liqi-market-maker-prod",
+      "networkMode": "awsvpc",
+
+      "requiresCompatibilities": [ 
+         "FARGATE" 
+      ]
+   }
+]
