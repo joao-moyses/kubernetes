@@ -1,0 +1,26 @@
+# Template Terraform to deploy to Cloud Infrastructure
+
+# This template allows you to deploy your infrastructure using Terraform to supported cloud providers.
+# The workflow allows running tests, security scans on feature branches (as well as master).
+# After merging code to master the infrastructure will be deployed to cloud according to the given terraform template.
+
+# Prerequisites: credentials according to used cloud provider.
+# For advanced cases, please, follow terraform docs https://www.terraform.io/docs/index.html.
+
+
+image: hashicorp/terraform
+
+pipelines:
+  custom:
+    pastta:
+        - step:
+            name: Test
+            oidc: true
+            script:
+              - export AWS_REGION=us-east-1
+              - export AWS_ROLE_ARN=$AWS_ROLE_ARN
+              - export AWS_WEB_IDENTITY_TOKEN_FILE=$(pwd)/web-identity-token
+              - echo $BITBUCKET_STEP_OIDC_TOKEN > $(pwd)/web-identity-token
+              - terraform apply -auto-approve
+
+
